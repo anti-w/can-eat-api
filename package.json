@@ -4,11 +4,12 @@
   "description": "API publica para consultas dos dados do Can Cook que estao guardados no Firebase Firestore",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index"
   },
   "author": "Wendel Demetrio",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "firebase-admin": "^10.0.1"
   }
