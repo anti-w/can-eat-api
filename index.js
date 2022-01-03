@@ -1,5 +1,6 @@
 const firebase = require('./connectDB')
 const alimentosRef = firebase.firestore().collection("alimentos")
+const gruposRef = firebase.firestore().collection('grupos')
 
 const express = require('express')
 const app = express()
@@ -7,12 +8,22 @@ const port = process.env.PORT || 3000
 
 
 
-app.get('/', async (req, res) => {
+app.get('/alimentos', async (req, res) => {
 
-  const snapshot = await alimentosRef.get();
-  const allData = {}
+  const snapshot = await alimentosRef.orderBy('Nome').get();
+  const allData = []
   snapshot.forEach(doc => {
-    allData[doc.id] = doc.data();
+    allData.push(doc.data())
+  });
+  res.send(allData)
+})
+
+app.get('/groups', async (req, res) => {
+
+  const snapshot = await gruposRef.orderBy('nome').get();
+  const allData = []
+  snapshot.forEach(doc => {
+    allData.push(doc.data())
   });
   res.send(allData)
 })
@@ -22,6 +33,8 @@ app.get('/:id', async (req, res) => {
   res.json(result.data())
 
 })
+
+
 
 app.listen(port, () => {
   console.log(`App rodando! Acesse: http://localhost:${port}`)
