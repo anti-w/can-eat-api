@@ -1,10 +1,12 @@
 const firebase = require('./connectDB')
 const alimentosRef = firebase.firestore().collection("alimentos")
 const gruposRef = firebase.firestore().collection('grupos')
-
+const cors = require('cors')
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use(cors())
 
 
 
