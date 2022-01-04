@@ -12,7 +12,7 @@ app.use(cors())
 
 app.get('/alimentos', async (req, res) => {
 
-  const snapshot = await alimentosRef.orderBy('Nome').get();
+  const snapshot = await alimentosRef.orderBy('Nome').limit(10).get()
   const allData = []
   snapshot.forEach(doc => {
     allData.push(doc.data())
