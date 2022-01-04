@@ -30,13 +30,20 @@ app.get('/groups', async (req, res) => {
   res.send(allData)
 })
 
-app.get('/:id', async (req, res) => {
-  const result = await alimentosRef.doc(req.params.id).get()
-  res.json(result.data())
+app.get('/:group', async (req, res) => {
+  const data = []
+  const groupRef = await alimentosRef.orderBy('Nome', 'asc').where('Grupo', '==', req.params.group).get()
+
+  if (groupRef.empty) {
+    console.log('Nenhum alimento para este grupo')
+    return
+  }
+  groupRef.forEach(doc => {
+    data.push(doc.data())
+  })
+  res.send(data)
 
 })
-
-
 
 app.listen(port, () => {
   console.log(`App rodando! Acesse: http://localhost:${port}`)
