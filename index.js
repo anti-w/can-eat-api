@@ -32,7 +32,7 @@ app.get('/groups', async (req, res) => {
 
 app.get('/:group', async (req, res) => {
   const data = []
-  const groupRef = await alimentosRef.orderBy('Nome', 'asc').where('Grupo', '==', req.params.group).get()
+  const groupRef = await alimentosRef.orderBy('Nome', 'asc').where('Grupo', '==', req.params.group).limit(10).get()
 
   if (groupRef.empty) {
     console.log('Nenhum alimento para este grupo')
