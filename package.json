@@ -4,14 +4,20 @@
   "description": "API publica para consultas dos dados do Can Cook que estao guardados no Firebase Firestore",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "nodemon index.js"
   },
   "author": "Wendel Demetrio",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
-    "mongodb": "^4.4.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
