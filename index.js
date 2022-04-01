@@ -79,8 +79,8 @@ app.post("/auth/register", async (req, res) => {
   const userExists = await User.findOne({ email: email });
 
   if (userExists) {
-    return res.status(422).json({
-      msg: "E-mail já cadastrado",
+    return res.status(422).send({
+      msg: "Email já cadastrado",
     });
   }
 
