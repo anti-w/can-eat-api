@@ -4,7 +4,7 @@
   "description": "API publica para consultas dos dados do Can Cook que estao guardados no Firebase Firestore",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "Wendel Demetrio",
   "license": "ISC",
