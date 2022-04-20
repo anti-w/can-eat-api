@@ -18,6 +18,7 @@ app.listen(port, () => {
 //Models
 
 const User = require("./models/User");
+const Food = require("./models/Food");
 const FoodGroup = require("./models/FoodGroup");
 
 //Public Route
@@ -30,6 +31,11 @@ app.get("/", async (req, res) => {
 app.get("/groups", async (req, res) => {
   const groups = await FoodGroup.find();
   res.status(200).send(groups);
+});
+
+app.get("/foods", async (req, res) => {
+  const foods = await Food.find();
+  res.status(200).send(foods);
 });
 
 //Private Route
