@@ -18,12 +18,19 @@ app.listen(port, () => {
 //Models
 
 const User = require("./models/User");
+const FroodGroup = require("./models/FoodGroup");
 
 //Public Route
 app.get("/", async (req, res) => {
   res.status(200).json({
     msg: "Bem vindo a API",
   });
+});
+
+app.get("/groups", async (req, res) => {
+  const group = await FroodGroup.find({});
+
+  res.status(200).send(group);
 });
 
 //Private Route
