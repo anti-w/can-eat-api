@@ -18,7 +18,7 @@ app.listen(port, () => {
 //Models
 
 const User = require("./models/User");
-const FroodGroup = require("./models/FoodGroup");
+const FoodGroup = require("./models/FoodGroup");
 
 //Public Route
 app.get("/", async (req, res) => {
@@ -28,9 +28,8 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/groups", async (req, res) => {
-  const group = await FroodGroup.find({});
-
-  res.status(200).send(group);
+  const groups = await FoodGroup.find();
+  res.status(200).send(groups);
 });
 
 //Private Route

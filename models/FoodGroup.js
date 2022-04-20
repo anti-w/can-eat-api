@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const FoodGroup = mongoose.model("FoodGroup", {
+const FoodGroup = mongoose.model("groups", {
   name: String,
   srcImg: String,
 });
