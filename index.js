@@ -33,8 +33,10 @@ app.get("/groups", async (req, res) => {
   res.status(200).send(groups);
 });
 
-app.get("/foods", async (req, res) => {
-  const foods = await Food.find();
+app.get("/foods/:page", async (req, res) => {
+  let page = req.params.page * 10;
+
+  const foods = await Food.find().skip(page).limit(10).sort("nome");
   res.status(200).send(foods);
 });
 
