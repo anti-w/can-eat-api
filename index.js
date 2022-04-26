@@ -30,7 +30,7 @@ app.get("/", async (req, res) => {
 
 app.get("/groups", async (req, res) => {
   const groups = await FoodGroup.find();
-  res.status(200).send(groups);
+  return res.status(200).send(groups);
 });
 
 app.get("/foods/:group/:page", async (req, res) => {
@@ -44,7 +44,7 @@ app.get("/foods/:group/:page", async (req, res) => {
     .skip(page)
     .limit(10)
     .sort("nome");
-  res.status(200).send(foods);
+  return res.status(200).send(foods);
 });
 
 app.get("/foods/search/:group?/:searchParams/:page", async (req, res) => {
@@ -80,7 +80,7 @@ app.get("/foods/:page", async (req, res) => {
   let page = req.params.page * 10;
 
   const foods = await Food.find().skip(page).limit(10).sort("nome");
-  res.status(200).send(foods);
+  return res.status(200).send(foods);
 });
 
 //Private Route
@@ -94,7 +94,7 @@ app.get("/user/:id", checkToken, async (req, res) => {
     return res.status(404).json({ msg: "Usuário não encontrado!" });
   }
 
-  res.status(200).json({ user });
+  return res.status(200).json({ user });
 });
 
 function checkToken(req, res, next) {
