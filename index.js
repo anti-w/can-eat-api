@@ -33,6 +33,49 @@ app.get("/groups", async (req, res) => {
   res.status(200).send(groups);
 });
 
+app.get("/foods/:group/:page", async (req, res) => {
+  let page = req.params.page * 10;
+
+  const group = req.params.group;
+  console.log(group);
+  const foods = await Food.find({
+    grupoAlimentar: { $eq: group },
+  })
+    .skip(page)
+    .limit(10)
+    .sort("nome");
+  res.status(200).send(foods);
+});
+
+app.get("/foods/search/:group?/:searchParams/:page", async (req, res) => {
+  let page = req.params.page * 10;
+  const searchParams = req.params.searchParams;
+  const group = req.params.group;
+  console.log(group);
+
+  if (!group) {
+    const foods = await Food.find({
+      nome: { $regex: searchParams, $options: "i" },
+    })
+      .skip(page)
+      .limit(10)
+      .sort("nome");
+
+    return res.status(200).send(foods);
+  }
+
+  const foods = await Food.find({
+    $and: [
+      { nome: { $regex: searchParams, $options: "i" } },
+      { grupoAlimentar: { $eq: group } },
+    ],
+  })
+    .skip(page)
+    .limit(10)
+    .sort("nome");
+  return res.status(200).send(foods);
+});
+
 app.get("/foods/:page", async (req, res) => {
   let page = req.params.page * 10;
 
