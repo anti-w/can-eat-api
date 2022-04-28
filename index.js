@@ -37,7 +37,12 @@ app.get("/foods/:group/:page", async (req, res) => {
   let page = req.params.page * 10;
 
   const group = req.params.group;
-  console.log(group);
+
+  if (group === "Todos os alimentos") {
+    const foods = await Food.find().skip(page).limit(10).sort("nome");
+    return res.status(200).send(foods);
+  }
+
   const foods = await Food.find({
     grupoAlimentar: { $eq: group },
   })
