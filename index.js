@@ -25,7 +25,6 @@ const FoodGroup = require("./models/FoodGroup");
 app.get("/", async (req, res) => {
   res.status(200).json({
     msg: "Bem vindo a API",
-    test: 1,
   });
 });
 
