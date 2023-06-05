@@ -162,4 +162,23 @@ const deleteUser = async (req, res) => {
   return res.status(200).json({ msg: "Usuário deletado com sucesso" });
 };
 
-module.exports = { registerUser, loginUser, deleteUser, updateUser };
+const authenticateUser = async (req, res) => {
+  const id = req.params.id;
+
+  // check if user exists
+  const user = await User.findById(id, "-password");
+
+  if (!user) {
+    return res.status(404).json({ msg: "Usuário não encontrado!" });
+  }
+
+  return res.status(200).json({ user });
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  deleteUser,
+  updateUser,
+  authenticateUser,
+};
