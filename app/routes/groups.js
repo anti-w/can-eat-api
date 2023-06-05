@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const controller = require("../controllers/groups");
 
-router.get("/all", controller.getGroups);
+router.get("/", controller.getGroups);
 
 module.exports = router;

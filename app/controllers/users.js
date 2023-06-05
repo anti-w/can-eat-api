@@ -8,13 +8,13 @@ const registerUser = async (req, res) => {
 
   //validation
   if (!name) {
-    return res.status(422).json({ msg: "O nome é obrigatório mané" });
+    return res.status(422).json({ msg: "O nome é obrigatório." });
   }
   if (!email) {
-    return res.status(422).json({ msg: "O e-mail é obrigatório mané" });
+    return res.status(422).json({ msg: "O e-mail é obrigatório." });
   }
   if (!password) {
-    return res.status(422).json({ msg: "O password é obrigatório mané" });
+    return res.status(422).json({ msg: "O password é obrigatório." });
   }
   if (password !== confirmpassword) {
     return res.status(422).json({ msg: "As senhas não são iguais" });
@@ -60,10 +60,10 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email) {
-    return res.status(422).json({ msg: "O e-mail é obrigatório mané" });
+    return res.status(422).json({ msg: "O e-mail é obrigatório." });
   }
   if (!password) {
-    return res.status(422).json({ msg: "O password é obrigatório mané" });
+    return res.status(422).json({ msg: "O password é obrigatório." });
   }
   //check if user exists
   const user = await User.findOne({ email: email });
@@ -103,4 +103,63 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const updateUser = async (req, res) => {
+  const { email, password, name } = req.body;
+
+  if (!email) {
+    return res.status(422).json({ msg: "O e-mail é obrigatório." });
+  }
+  if (!password) {
+    return res.status(422).json({ msg: "O password é obrigatório." });
+  }
+  if (!name) {
+    return res.status(422).json({ msg: "O nome é obrigatório." });
+  }
+  //check if user exists
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    return res.status(404).json({ msg: "usuário não encontrado" });
+  }
+
+  //check if password match
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    return res.status(422).json({ msg: "Senha inválida" });
+  }
+
+  const updatedUser = await User.updateOne({ email: email }, { name: name });
+
+  return res.status(200).json({ msg: "Usuário atualizado", user: updatedUser });
+};
+
+const deleteUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    return res.status(422).json({ msg: "O e-mail é obrigatório." });
+  }
+  if (!password) {
+    return res.status(422).json({ msg: "O password é obrigatório." });
+  }
+  //check if user exists
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    return res.status(404).json({ msg: "usuário não encontrado" });
+  }
+
+  //check if password match
+  const checkPassword = await bcrypt.compare(password, user.password);
+
+  if (!checkPassword) {
+    return res.status(422).json({ msg: "Senha inválida" });
+  }
+
+  await User.deleteOne({ email: email });
+
+  return res.status(200).json({ msg: "Usuário deletado com sucesso" });
+};
+
+module.exports = { registerUser, loginUser, deleteUser, updateUser };
